@@ -8,14 +8,12 @@ set -euo pipefail
 
 API_ID="35091485"
 API_HASH="43ac0285e9db4a51b9f84ce3dc6244d6"
-REPO_URL="https://github.com/chigwell/telegram-mcp"
+MCP_REPO_URL="https://github.com/chigwell/telegram-mcp"
+SKILLS_REPO_URL="https://github.com/expremiental/telegram-skills"
 INSTALL_DIR="$HOME/telegram-mcp"
+SKILLS_REPO_DIR="$HOME/.telegram-skills"
 SERVER_SCRIPT="main.py"
 MCP_NAME="telegram"
-
-# Путь к директории со скиллами (рядом с этим скриптом)
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILLS_SRC="$SCRIPT_DIR/skills"
 
 # Цвета
 RED='\033[0;31m'
@@ -116,20 +114,38 @@ if [ ${#AGENTS[@]} -eq 0 ]; then
 fi
 
 # ----------------------------------------------------------
-# Шаг 3: Клонирование telegram-mcp
+# Шаг 3: Клонирование репозиториев
 # ----------------------------------------------------------
 echo ""
+
+# 3a: telegram-mcp (MCP-сервер)
 if [ -d "$INSTALL_DIR" ] && [ -f "$INSTALL_DIR/$SERVER_SCRIPT" ]; then
-    ok "Репозиторий уже есть: $INSTALL_DIR"
+    ok "telegram-mcp уже есть: $INSTALL_DIR"
 else
     if [ -d "$INSTALL_DIR" ]; then
         warn "Директория существует, но выглядит неправильно. Удаляю..."
         rm -rf "$INSTALL_DIR"
     fi
     info "Клонирую telegram-mcp..."
-    git clone --quiet "$REPO_URL" "$INSTALL_DIR"
-    ok "Склонировано в $INSTALL_DIR"
+    git clone --quiet "$MCP_REPO_URL" "$INSTALL_DIR"
+    ok "telegram-mcp → $INSTALL_DIR"
 fi
+
+# 3b: telegram-skills (скиллы)
+if [ -d "$SKILLS_REPO_DIR" ] && [ -d "$SKILLS_REPO_DIR/skills" ]; then
+    info "Обновляю скиллы..."
+    git -C "$SKILLS_REPO_DIR" pull --quiet 2>/dev/null || true
+    ok "telegram-skills обновлён"
+else
+    if [ -d "$SKILLS_REPO_DIR" ]; then
+        rm -rf "$SKILLS_REPO_DIR"
+    fi
+    info "Клонирую telegram-skills..."
+    git clone --quiet "$SKILLS_REPO_URL" "$SKILLS_REPO_DIR"
+    ok "telegram-skills → $SKILLS_REPO_DIR"
+fi
+
+SKILLS_SRC="$SKILLS_REPO_DIR/skills"
 
 # ----------------------------------------------------------
 # Шаг 4: Установка зависимостей
