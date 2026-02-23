@@ -183,6 +183,8 @@ if [ "$SKIP_AUTH" = false ]; then
     echo "Нужно войти в твой аккаунт Telegram."
     echo "Код подтверждения придёт в приложение Telegram."
     echo ""
+    echo "Телефон, код и пароль используются один раз и НЕ сохраняются."
+    echo ""
 
     cat > "$INSTALL_DIR/_auth.py" <<'PYEOF'
 import os, sys, asyncio
