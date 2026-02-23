@@ -14,7 +14,7 @@ allowed-tools:
 
 ## Шаг 1: Получи список личных чатов
 
-Используй `list_chats` с параметром `chat_type="user"` и `limit=50` — это вернёт только DM (1 на 1 переписки).
+Используй `list_chats` с параметром `chat_type="user"` и `limit=100` — это вернёт только DM (1 на 1 переписки).
 
 Пропусти: Saved Messages (свой ID — получи через `get_me`), Telegram (ID 777000).
 
