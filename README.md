@@ -4,11 +4,28 @@
 
 ## Установка
 
-```bash
-curl -sSL https://raw.githubusercontent.com/expremiental/telegram-skills/main/setup.sh -o /tmp/setup-tg.sh && chmod +x /tmp/setup-tg.sh && open -a Terminal /tmp/setup-tg.sh
+### Через агента (рекомендуется)
+
+Скопируй это в чат с агентом (Claude Code, Codex, Cursor):
+
+```
+Выполни эту команду: curl -sSL https://raw.githubusercontent.com/expremiental/telegram-skills/main/setup.sh -o /tmp/setup-tg.sh && chmod +x /tmp/setup-tg.sh && open -a Terminal /tmp/setup-tg.sh
 ```
 
-Или локально:
+Откроется окно Terminal. Следуй инструкциям:
+1. Введи номер телефона
+2. Введи код из Telegram
+3. Если есть 2FA — введи пароль
+
+После завершения перезапусти агент и всё работает.
+
+### Вручную
+
+```bash
+curl -sSL https://raw.githubusercontent.com/expremiental/telegram-skills/main/setup.sh -o /tmp/setup-tg.sh && bash /tmp/setup-tg.sh
+```
+
+Или из клона:
 
 ```bash
 git clone https://github.com/expremiental/telegram-skills.git
@@ -16,11 +33,12 @@ cd telegram-skills
 bash setup.sh
 ```
 
-Скрипт сам:
-- Установит telegram-mcp и зависимости
-- Проведёт авторизацию в Telegram (телефон → код → 2FA)
-- Зарегистрирует MCP в твоём агенте
-- Скопирует скиллы
+### Что делает скрипт
+
+- Ставит telegram-mcp и зависимости
+- Проводит авторизацию в Telegram (телефон → код → 2FA)
+- Регистрирует MCP в найденных агентах
+- Копирует скиллы
 
 ## Скиллы
 
