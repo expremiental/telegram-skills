@@ -357,13 +357,15 @@ if [ ! -d "$SKILLS_SRC" ]; then
     warn "Директория со скиллами не найдена: $SKILLS_SRC"
     warn "Скиллы можно установить позже, скопировав файлы из skills/ в ~/.claude/skills/"
 else
-    # Собираем уникальные директории для скиллов
-    declare -A UNIQUE_SKILLS_DIRS
+    # Дедупликация директорий (bash 3.2 совместимо)
+    UNIQUE_DIRS=""
     for dir in "${SKILLS_DIRS[@]}"; do
-        UNIQUE_SKILLS_DIRS["$dir"]=1
+        if ! echo "$UNIQUE_DIRS" | grep -qF "$dir"; then
+            UNIQUE_DIRS="$UNIQUE_DIRS $dir"
+        fi
     done
 
-    for skills_target in "${!UNIQUE_SKILLS_DIRS[@]}"; do
+    for skills_target in $UNIQUE_DIRS; do
         mkdir -p "$skills_target"
 
         for skill_dir in "$SKILLS_SRC"/*/; do
