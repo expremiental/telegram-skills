@@ -25,14 +25,6 @@
 curl -sSL https://raw.githubusercontent.com/expremiental/telegram-skills/main/setup.sh -o /tmp/setup-tg.sh && bash /tmp/setup-tg.sh
 ```
 
-Или из клона:
-
-```bash
-git clone https://github.com/expremiental/telegram-skills.git
-cd telegram-skills
-bash setup.sh
-```
-
 ### Что делает скрипт
 
 - Ставит telegram-mcp и зависимости
@@ -51,8 +43,6 @@ bash setup.sh
 > сделай саммари чата с Олей за последнюю неделю
 > о чём мы договорились с Витей в декабре?
 ```
-
-Один скилл `telegram-agent` — агент сам определяет что делать по запросу.
 
 ## Поддерживаемые агенты
 
